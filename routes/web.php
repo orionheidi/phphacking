@@ -19,5 +19,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin', 'AdminUsersController@index');
+Route::get('/admin', 'AdminUsersController@index')->name('admin-users');
+Route::post('/admin/users/store', 'AdminUsersController@store')->name('store');
 Route::resource('admin/users', 'AdminUsersController');
