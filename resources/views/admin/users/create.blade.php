@@ -40,5 +40,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
-      {{-- @include('partials.form_errors') --}}
+      @include('partials.form_errors')
 @endsection

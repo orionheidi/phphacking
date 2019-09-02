@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Role;
 use App\Photo;
+use DB;
 
 class AdminUsersController extends Controller
 {
@@ -63,7 +64,13 @@ class AdminUsersController extends Controller
 
     public function edit($id)
     {
-        return view('admin.users.edit');
+        $user = User::findOrFail($id);
+        $roles = Role::all(['id','name']);
+        // $roles = DB::table('roles')->pluck('id', 'name');
+            
+        // $roles =  DB::table('roles')->get();
+        // dd($user);
+        return view('admin.users.edit', compact('user','roles'));
     }
 
     public function update(Request $request, $id)
