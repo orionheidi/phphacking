@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-    <form method="PATCH" action="{{ route('update'), $user->id }}"  id="createForm"  enctype="multipart/form-data">
+
+    <form method="POST" action="{{ route('update', ['id' => $user->id]) }}"  id="createForm"  enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <h1>Edit User</h1>
         <div class="col-sm-3">
         <img src="{{$user->photo ? $user->photo['path'] : "http://placehold.it/400x400"}}" alt="" class="img-responsive img-rounded"> 
@@ -37,14 +39,12 @@
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-                <input id="password" type="password" class="form-control" name="password" autocomplete="new-password">
-        </div>
-        <div class="form-group">
-            <label for="password-confirm">Confirm Password</label>
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
+                <input id="password" type="password" class="form-control" name="password">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
-      {{-- @include('partials.form_errors') --}}
+    <div>
+      @include('partials.form_errors')
+    </div>
 @endsection

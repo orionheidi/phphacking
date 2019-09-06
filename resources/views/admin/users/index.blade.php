@@ -19,11 +19,11 @@
         @foreach($users as $user)
         <tr>
         <td>{{$user->id}}</td>
-        {{-- @if($user->photo)  --}}
-        <td><img height="50" src="{{$user->photo ? $user->photo['path'] : "http://placehold.it/400x400"}}" alt="" class="img-responsive img-rounded"> </td>   
-        {{-- @else 
-        <td>No Photo</td> 
-        @endif --}}
+        @if($user->photo) 
+        <td><img height="50" src="{{$user->photo->path}}" > </td>   
+        @else 
+        <td><img height="50" src="{{$user->photo ? $user->photo['path'] : "http://placehold.it/400x400"}}" alt="" class="img-responsive img-rounded"></td> 
+        @endif
         {{-- <td>{{$user->photo ? '$user->photo->path' : 'no user photo'}}</td> --}}
         <td><a href="{{route('edit', ['id' => $user->id])}}">{{$user->name}}</a></td>
         <td>{{$user->email}}</td>

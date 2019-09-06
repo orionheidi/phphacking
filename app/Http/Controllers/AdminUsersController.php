@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserEditRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
@@ -24,17 +25,15 @@ class AdminUsersController extends Controller
         return view('admin.users.create',compact('roles'));
     }
 
-    public function store(Request  $request)
+    public function store(UserCreateRequest $request)
     {
-        $this->validate($request,
-        [
-            'name' => 'required|min:2',
-            'email' => 'required||string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        if(trim($request->password) == ''){
+            $user = $request->except('password');
+        }else{
+            $user = $request->all();
+            $user['password'] = bcrypt($request->password);
+        }
 
-        $user = $request->all();
-        $user['password'] = bcrypt($request->password);
         $role = $request['role'];
         $user['role_id'] = $role;
         $isActive = $request['is_active'];
@@ -75,7 +74,33 @@ class AdminUsersController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if(trim($request->password) == ''){
+            $input = $request->except('password');
+        }else{
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
+
+        $role = $request['role'];
+        $user['role_id'] = $role;
+        $isActive = $request['is_active'];
+        $user['is_active'] = $isActive;
+
+        if($file = $request->file('file')){
+
+            $name = $file->getClientOriginalName();
+
+            $file->move('images', $name);
+
+            $photo = Photo::create(['path'=> $name]);
+
+            $user['photo_id'] = $photo->id;
+        }
+        
+        $user->update($input);
+        return redirect('/admin/users');
     }
 
     public function destroy($id)

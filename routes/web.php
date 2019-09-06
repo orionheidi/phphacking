@@ -22,5 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminUsersController@index')->name('admin-users');
 Route::post('/admin/users/store', 'AdminUsersController@store')->name('store');
 Route::get('/admin/users/edit/{id}', 'AdminUsersController@edit')->name('edit');
-Route::post('/admin/users/update', 'AdminUsersController@update')->name('update');
+Route::put('/admin/users/update/{id}', 'AdminUsersController@update')->name('update');
 Route::resource('admin/users', 'AdminUsersController');
