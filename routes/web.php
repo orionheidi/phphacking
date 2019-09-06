@@ -19,8 +19,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::group(['middleware'=>'admin'],function(){
+    Route::resource('admin/users', 'AdminUsersController');
+});
+
 Route::get('/admin', 'AdminUsersController@index')->name('admin-users');
 Route::post('/admin/users/store', 'AdminUsersController@store')->name('store');
 Route::get('/admin/users/edit/{id}', 'AdminUsersController@edit')->name('edit');
 Route::put('/admin/users/update/{id}', 'AdminUsersController@update')->name('update');
+Route::get('/admin/users/destroy/{id}', 'AdminUsersController@destroy')->name('destroy');
 Route::resource('admin/users', 'AdminUsersController');
+
+

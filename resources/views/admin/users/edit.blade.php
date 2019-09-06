@@ -41,7 +41,13 @@
             <label for="password">Password</label>
                 <input id="password" type="password" class="form-control" name="password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary col-cm-6">Submit</button>
+      </form>
+      <br>
+      <br>
+      <form method="DELETE" action="{{ route('destroy', ['id' => $user->id]) }}"  id="createForm"  enctype="multipart/form-data">
+        @csrf
+        <button type="submit" class="btn btn-danger col-cm-6">Delete User</button>
       </form>
     </div>
     <div>
